@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erhan Haircut | VIP Randevu Sistemi</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <style>
+        :root { --neon: #ff0000; --bg: #050505; --card: #111; --text: #fff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        
+        .container { background: var(--card); padding: 35px; border-radius: 20px; border: 1px solid var(--neon); box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); width: 100%; max-width: 400px; text-align: center; }
+        
+        h1 { color: var(--neon); letter-spacing: 3px; margin-bottom: 5px; text-transform: uppercase; font-size: 24px; text-shadow: 0 0 10px var(--neon); }
+        p { color: #888; font-size: 14px; margin-bottom: 30px; }
+        
+        input, select, button { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #1a1a1a; color: white; box-sizing: border-box; outline: none; font-size: 15px; }
+        
+        input:focus, select:focus { border-color: var(--neon); box-shadow: 0 0 12px rgba(255, 0, 0, 0.4); }
+        
+        button { background: var(--neon); border: none; font-weight: bold; cursor: pointer; transition: 0.4s; font-size: 16px; margin-top: 20px; text-transform: uppercase; }
+        button:hover { transform: translateY(-3px); box-shadow: 0 5px 20px var(--neon); }
+        button:disabled { background: #444; cursor: not-allowed; }
+
+        .footer { margin-top: 20px; font-size: 11px; color: #444; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ERHAN HAIRCUT</h1>
+    <p>VIP Randevu Paneli</p>
+    
+    <form id="appointmentForm">
+        <input type="text" id="custName" placeholder="Adınız Soyadınız" required>
+        <input type="tel" id="custPhone" placeholder="Telefon (05xx xxx xx xx)" required>
+        
+        <select id="custService">
+            <option value="Saç Kesimi">Saç Kesimi</option>
+            <option value="Sakal Tıraşı">Sakal Tıraşı</option>
+            <option value="Saç & Sakal Kombin">Saç & Sakal Kombin</option>
+            <option value="Cilt Bakımı">Cilt Bakımı</option>
+        </select>
+        
+        <select id="custTime" required>
+            <option value="">Saat Seçiniz</option>
+            <option value="09:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+        </select>
+        
+        <button type="submit" id="submitBtn">RANDEVU TALEBİ GÖNDER</button>
+    </form>
+    
+    <div class="footer">DEVELOPED BY ÖMER FARUK YACAN</div>
+</div>
+
+<script type="module">
+    // Firebase Modülleri
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    // Senin Firebase Ayarların
+    const firebaseConfig = {
+        apiKey: "AIzaSyB0YRC4KEmy9cZQ07DpDhIzYIXopgUrWtQ",
+        authDomain: "erhanhaircut.firebaseapp.com",
+        projectId: "erhanhaircut",
+        storageBucket: "erhanhaircut.firebasestorage.app",
+        messagingSenderId: "481833678528",
+        appId: "1:481833678528:web:ffab1f5f1075113bc91f25"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Senin EmailJS Ayarların
+    const EMAILJS_PUBLIC_KEY = "4fwv8uFfH2Ffj80u-";
+    const EMAILJS_SERVICE_ID = "service_480t845";
+    const EMAILJS_TEMPLATE_ID = "template_kvu1ttr";
+
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
+    const form = document.getElementById('appointmentForm');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        btn.innerText = "GÖNDERİLİYOR...";
+        btn.disabled = true;
+
+        const appointmentData = {
+            name: document.getElementById('custName').value,
+            phone: document.getElementById('custPhone').value,
+            service: document.getElementById('custService').value,
+            time: document.getElementById('custTime').value,
+            date: new Date().toLocaleDateString('tr-TR'),
+            createdAt: new Date()
+        };
+
+        try {
+            // 1. Firebase Firestore'a Kaydet
+            await addDoc(collection(db, "randevular"), appointmentData);
+
+            // 2. EmailJS ile Sana Bildirim Gönder
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                name: appointmentData.name,
+                phone: appointmentData.phone,
+                time: appointmentData.time,
+                service: appointmentData.service
+            });
+
+            alert("Harika! Randevu talebin başarıyla Erhan Bey'e iletildi.");
+            form.reset();
+
+        } catch (error) {
+            console.error("Hata:", error);
+            alert("Bir hata oluştu. Lütfen bağlantını kontrol et ve tekrar dene.");
+        } finally {
+            btn.innerText = "RANDEVU TALEBİ GÖNDER";
+            btn.disabled = false;
+        }
+    });
+</script>
+
+</body>
+</html>
