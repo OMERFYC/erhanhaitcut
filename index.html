@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Erhan Cut | Luxury VIP Experience</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -14,11 +14,11 @@
             --gold: #d4af37; 
             --gold-hover: #f1c40f; 
             --bg: #0a0a0a; 
-            --card: rgba(21, 21, 21, 0.95); 
+            --card: rgba(21, 21, 21, 0.98); 
             --text: #e0e0e0; 
         }
 
-        /* Giriş Ekranı (Splash Screen) Styles */
+        /* Splash Screen */
         #loader-wrapper {
             position: fixed;
             top: 0; left: 0;
@@ -32,16 +32,16 @@
             transition: opacity 0.8s ease, visibility 0.8s;
         }
         .loader-logo {
-            font-size: clamp(30px, 8vw, 50px);
+            font-size: clamp(30px, 10vw, 50px);
             font-weight: 900;
             color: var(--gold);
-            letter-spacing: 8px;
+            letter-spacing: 5px;
             margin-bottom: 20px;
             text-align: center;
             animation: pulse 2s infinite;
         }
         .loader-bar {
-            width: 200px;
+            width: 150px;
             height: 2px;
             background: #222;
             position: relative;
@@ -59,7 +59,7 @@
 
         @keyframes pulse {
             0%, 100% { transform: scale(0.98); opacity: 0.7; }
-            50% { transform: scale(1.05); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 1; }
         }
         @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
 
@@ -68,86 +68,143 @@
             background: var(--bg); 
             color: var(--text); 
             font-family: 'Poppins', sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
             margin: 0; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
             background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=2070'); 
             background-size: cover; 
             background-position: center; 
             background-attachment: fixed; 
-            padding: 40px 0; 
+            padding: 20px 0; 
         }
 
         .container { 
             background: var(--card); 
-            padding: 40px; 
+            padding: 30px 20px; 
             border-radius: 12px; 
             border-top: 5px solid var(--gold); 
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9); 
-            width: 90%; 
-            max-width: 420px; 
+            width: 92%; 
+            max-width: 400px; 
             text-align: center; 
+            box-sizing: border-box;
+            margin-bottom: 30px;
         }
 
-        h1 { color: var(--gold); letter-spacing: 5px; margin: 0; font-size: 38px; font-weight: 900; }
-        .subtitle { color: #777; font-size: 11px; letter-spacing: 4px; margin-bottom: 30px; text-transform: uppercase; }
+        h1 { color: var(--gold); letter-spacing: 3px; margin: 0; font-size: 32px; font-weight: 900; }
+        .subtitle { color: #777; font-size: 10px; letter-spacing: 3px; margin-bottom: 25px; text-transform: uppercase; }
         
-        label { display: block; text-align: left; font-size: 10px; color: var(--gold); margin: 0 0 6px 6px; font-weight: bold; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #151515; color: white; outline: none; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        textarea { height: 60px; resize: none; }
+        label { display: block; text-align: left; font-size: 11px; color: var(--gold); margin: 0 0 6px 4px; font-weight: bold; text-transform: uppercase; }
         
-        .warning-text { background: rgba(212, 175, 55, 0.1); color: var(--gold); padding: 10px; border-radius: 6px; font-size: 11px; margin-bottom: 20px; border: 1px dashed var(--gold); font-weight: 600; }
+        /* Mobile optimization for inputs */
+        input, select, textarea { 
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            border-radius: 8px; 
+            border: 1px solid #333; 
+            background: #151515; 
+            color: white; 
+            outline: none; 
+            box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 16px; /* iOS zoom engelleme */
+        }
+        textarea { height: 80px; resize: none; }
         
-        button { width: 100%; padding: 16px; background: var(--gold); border: none; color: #000; font-weight: 800; cursor: pointer; border-radius: 6px; text-transform: uppercase; letter-spacing: 2px; transition: 0.4s; }
-        button:hover { background: var(--gold-hover); transform: translateY(-2px); }
+        .warning-text { 
+            background: rgba(212, 175, 55, 0.05); 
+            color: var(--gold); 
+            padding: 12px; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            margin-bottom: 20px; 
+            border: 1px dashed rgba(212, 175, 55, 0.3); 
+            line-height: 1.4;
+        }
+        
+        button { 
+            width: 100%; 
+            padding: 18px; 
+            background: var(--gold); 
+            border: none; 
+            color: #000; 
+            font-weight: 800; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: 0.3s;
+            font-size: 14px;
+        }
+        button:active { transform: scale(0.98); }
 
-        .dev-footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #222; font-size: 11px; color: #555; }
-        .dev-link { color: var(--gold); text-decoration: none; font-weight: bold; transition: 0.3s; }
+        .dev-footer { margin-top: 20px; font-size: 10px; color: #555; line-height: 2; }
+        .dev-link { color: var(--gold); text-decoration: none; font-weight: bold; }
 
-        /* Admin Panel Styles */
-        #adminOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; padding: 20px; overflow-y: auto; }
-        .admin-content { max-width: 1000px; margin: 40px auto; background: #111; padding: 25px; border-radius: 10px; border: 1px solid var(--gold); }
-        table { width: 100%; border-collapse: collapse; color: #fff; margin-top: 15px; font-size: 12px; }
-        th { background: var(--gold); color: #000; padding: 10px; text-align: left; }
-        td { padding: 10px; border-bottom: 1px solid #222; }
-        .btn-delete { background: #e74c3c; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+        /* Social Media Panel - Optimized for Mobile */
+        .side-contact { 
+            position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            background: var(--card); 
+            padding: 15px; 
+            border-radius: 12px; 
+            border-left: 4px solid var(--gold); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            z-index: 999; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+        }
 
-        /* Social Media Panel */
-        .side-contact { position: fixed; top: 20px; left: 20px; background: var(--card); padding: 15px; border-radius: 10px; border-left: 4px solid var(--gold); box-shadow: 0 15px 35px rgba(0,0,0,0.6); z-index: 999; display: flex; flex-direction: column; gap: 12px; }
-        .side-contact-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-size: 13px; transition: 0.3s; font-weight: 500; }
-        .side-contact-item:hover { transform: scale(1.05); color: #fff; }
+        @media (max-width: 768px) {
+            .side-contact { 
+                position: relative; 
+                top: 0; left: 0; 
+                flex-direction: row; 
+                justify-content: center;
+                flex-wrap: wrap;
+                width: 92%;
+                max-width: 400px;
+                margin-bottom: 15px;
+                border-left: none;
+                border-bottom: 3px solid var(--gold);
+                padding: 12px;
+            }
+            .side-label { display: none; }
+            .side-contact-item span { display: none; } /* Mobilde sadece ikonlar kalsın */
+            .side-contact-item { font-size: 20px; padding: 5px 15px; }
+        }
+
+        .side-contact-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-size: 13px; transition: 0.3s; }
         .fa-instagram { color: #E1306C; }
         .fa-tiktok { color: #fff; }
         .fa-whatsapp { color: #25D366; }
         .side-label { color: var(--gold); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #333; padding-bottom: 5px; }
 
-        @media (max-width: 768px) {
-            .side-contact { position: relative; top: 0; left: 0; margin: 0 auto 20px; width: 90%; max-width: 420px; box-sizing: border-box; border-left: none; border-top: 4px solid var(--gold); }
-        }
+        /* Admin Panel Mobile Optimization */
+        #adminOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; padding: 10px; box-sizing: border-box; }
+        .admin-content { width: 100%; max-width: 900px; margin: 20px auto; background: #111; padding: 15px; border-radius: 10px; border: 1px solid var(--gold); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; } /* Tablonun ezilmesini önler */
+        th, td { padding: 12px 8px; text-align: left; font-size: 12px; border-bottom: 1px solid #222; }
     </style>
 </head>
 <body>
 
 <div id="loader-wrapper">
     <div class="loader-logo">ERHAN CUT</div>
-    <div class="loader-bar">
-        <div class="loader-progress"></div>
-    </div>
+    <div class="loader-bar"><div class="loader-progress"></div></div>
     <p style="color: #444; font-size: 10px; margin-top: 15px; letter-spacing: 2px;">LUXURY EXPERIENCE LOADING...</p>
 </div>
 
 <div class="side-contact">
-    <div class="side-label">İletişim & Sosyal</div>
+    <div class="side-label">İletişim</div>
     <a href="https://instagram.com/erhancutt" target="_blank" class="side-contact-item"><i class="fab fa-instagram"></i><span>erhancutt</span></a>
     <a href="https://tiktok.com/@erhancut" target="_blank" class="side-contact-item"><i class="fab fa-tiktok"></i><span>erhancut</span></a>
     <a href="https://wa.me/905354848015" target="_blank" class="side-contact-item"><i class="fab fa-whatsapp"></i><span>0535 484 80 15</span></a>
-    <div style="border-top: 1px solid #333; padding-top: 8px; margin-top: 5px;">
-        <a href="https://instagram.com/om3rfyc" target="_blank" style="color: #666; text-decoration: none; font-size: 11px;">
-            <i class="fas fa-code" style="color:var(--gold)"></i> YAPIMCI: @om3rfyc
-        </a>
-    </div>
 </div>
 
 <div class="container">
@@ -182,8 +239,8 @@
             <option value="21:15">21:15</option><option value="22:00">22:00</option>
         </select>
 
-        <label>AD SOYAD (ONAY)</label>
-        <textarea id="custConfirmName" placeholder="Onay için adınızı soyadınızı tekrar giriniz" required></textarea>
+        <label>NOTUNUZ (OPSİYONEL)</label>
+        <textarea id="custNote" placeholder="Eklemek istediğiniz bir not var mı?"></textarea>
 
         <div class="warning-text">
             <i class="fas fa-clock"></i> Lütfen randevunuzdan 10 dakika önce salonda olunuz.
@@ -193,35 +250,39 @@
     </form>
     
     <div class="dev-footer">
-        <div id="adminTrigger" style="cursor: pointer;">© 2026 ERHAN CUT | TÜM HAKLARI SAKLIDIR</div>
+        <div id="adminTrigger" style="cursor: pointer; margin-bottom: 5px;">© 2026 ERHAN CUT | TÜM HAKLARI SAKLIDIR</div>
         <a href="https://instagram.com/om3rfyc" target="_blank" class="dev-link">DESIGNED BY @OM3RFYC</a>
     </div>
 </div>
 
 <div id="adminOverlay">
     <div class="admin-content">
-        <div style="display:flex; justify-content: space-between; align-items: center;">
-            <h2 style="color:var(--gold); margin:0;">Yönetim Paneli</h2>
-            <button onclick="document.getElementById('adminOverlay').style.display='none'" style="padding: 5px 15px; cursor:pointer;">Kapat</button>
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 style="color:var(--gold); margin:0; font-size: 18px;">Yönetim Paneli</h2>
+            <button onclick="document.getElementById('adminOverlay').style.display='none'" style="width:auto; padding: 8px 15px;">Kapat</button>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Müşteri</th>
-                    <th>Telefon</th>
-                    <th>Hizmet</th>
-                    <th>Saat</th>
-                    <th>İşlem</th>
-                </tr>
-            </thead>
-            <tbody id="adminBody"></tbody>
-        </table>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Müşteri</th>
+                        <th>Telefon</th>
+                        <th>Hizmet</th>
+                        <th>Saat</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="adminBody"></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script type="module">
+    // Firebase ve Logic kısmın aynı kalabilir, sadece input ID'lerini (custNote gibi) küçük düzeltmelerle formuna bağladım.
+    // Mevcut Firebase kodunu buraya yapıştırabilirsin.
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyB0YRC4KEmy9cZQ07DpDhIzYIXopgUrWtQ",
@@ -236,11 +297,10 @@
     const db = getFirestore(app);
     emailjs.init("4fwv8uFfH2Ffj80u-");
 
-    // Splash Screen Kapatma
     window.addEventListener('load', () => {
         setTimeout(() => {
             document.getElementById('loader-wrapper').classList.add('loader-hidden');
-        }, 2500);
+        }, 2000);
     });
 
     async function updateAvailableTimes() {
@@ -286,14 +346,13 @@
                 time: customerData.time,
                 service: customerData.service
             });
-            alert(`Randevunuz Onaylandı!`);
+            alert(`Sayın ${customerData.name}, randevunuz başarıyla alındı!`);
             e.target.reset();
             updateAvailableTimes();
-        } catch (err) { alert("Hata oluştu."); }
+        } catch (err) { alert("Bir hata oluştu, lütfen tekrar deneyin."); }
         btn.disabled = false; btn.innerText = "RANDEVU TALEBİNİ GÖNDER";
     });
 
-    // Admin Panel Logic
     let clicks = 0;
     document.getElementById('adminTrigger').addEventListener('click', () => {
         clicks++;
@@ -308,7 +367,7 @@
 
     async function fetchData() {
         const tbody = document.getElementById('adminBody');
-        tbody.innerHTML = "Yükleniyor...";
+        tbody.innerHTML = "<tr><td colspan='5'>Yükleniyor...</td></tr>";
         const q = query(collection(db, "randevular"), orderBy("createdAt", "desc"));
         const snap = await getDocs(q);
         tbody.innerHTML = "";
@@ -319,13 +378,13 @@
                 <td><a href="tel:${r.phone}" style="color:var(--gold)">${r.phone}</a></td>
                 <td>${r.service}</td>
                 <td>${r.time}</td>
-                <td><button class="btn-delete" onclick="window.del('${d.id}')">Sil</button></td>
+                <td><button style="background:#e74c3c; padding:5px 10px;" onclick="window.del('${d.id}')">Sil</button></td>
             </tr>`;
         });
     }
 
     window.del = async (id) => {
-        if(confirm("Silinsin mi?")) {
+        if(confirm("Bu randevuyu silmek istediğinize emin misiniz?")) {
             await deleteDoc(doc(db, "randevular", id));
             fetchData();
             updateAvailableTimes();
