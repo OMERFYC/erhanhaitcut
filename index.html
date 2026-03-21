@@ -3,71 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erhan Haircut | VIP Randevu Sistemi</title>
+    <title>Erhan Cut | Luxury VIP Experience</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     
     <style>
-        :root { --neon: #ff0000; --bg: #050505; --card: #111; --text: #fff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        
-        .container { background: var(--card); padding: 35px; border-radius: 20px; border: 1px solid var(--neon); box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); width: 100%; max-width: 400px; text-align: center; }
-        
-        h1 { color: var(--neon); letter-spacing: 3px; margin-bottom: 5px; text-transform: uppercase; font-size: 24px; text-shadow: 0 0 10px var(--neon); }
-        p { color: #888; font-size: 14px; margin-bottom: 30px; }
-        
-        input, select, button { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #1a1a1a; color: white; box-sizing: border-box; outline: none; font-size: 15px; }
-        
-        input:focus, select:focus { border-color: var(--neon); box-shadow: 0 0 12px rgba(255, 0, 0, 0.4); }
-        
-        button { background: var(--neon); border: none; font-weight: bold; cursor: pointer; transition: 0.4s; font-size: 16px; margin-top: 20px; text-transform: uppercase; }
-        button:hover { transform: translateY(-3px); box-shadow: 0 5px 20px var(--neon); }
-        button:disabled { background: #444; cursor: not-allowed; }
+        :root { 
+            --gold: #d4af37; 
+            --gold-hover: #f1c40f; 
+            --bg: #0a0a0a; 
+            --card: rgba(21, 21, 21, 0.95); 
+            --text: #e0e0e0; 
+        }
 
-        .footer { margin-top: 20px; font-size: 11px; color: #444; letter-spacing: 1px; }
+        /* Giriş Ekranı (Splash Screen) Styles */
+        #loader-wrapper {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .loader-logo {
+            font-size: clamp(30px, 8vw, 50px);
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: #222;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--gold);
+            position: absolute;
+            animation: load 2.5s forwards ease-in-out;
+        }
+        .loader-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(0.98); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* Ana Sayfa Styles */
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Poppins', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=2070'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            padding: 40px 0; 
+        }
+
+        .container { 
+            background: var(--card); 
+            padding: 40px; 
+            border-radius: 12px; 
+            border-top: 5px solid var(--gold); 
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9); 
+            width: 90%; 
+            max-width: 420px; 
+            text-align: center; 
+        }
+
+        h1 { color: var(--gold); letter-spacing: 5px; margin: 0; font-size: 38px; font-weight: 900; }
+        .subtitle { color: #777; font-size: 11px; letter-spacing: 4px; margin-bottom: 30px; text-transform: uppercase; }
+        
+        label { display: block; text-align: left; font-size: 10px; color: var(--gold); margin: 0 0 6px 6px; font-weight: bold; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #333; background: #151515; color: white; outline: none; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        textarea { height: 60px; resize: none; }
+        
+        .warning-text { background: rgba(212, 175, 55, 0.1); color: var(--gold); padding: 10px; border-radius: 6px; font-size: 11px; margin-bottom: 20px; border: 1px dashed var(--gold); font-weight: 600; }
+        
+        button { width: 100%; padding: 16px; background: var(--gold); border: none; color: #000; font-weight: 800; cursor: pointer; border-radius: 6px; text-transform: uppercase; letter-spacing: 2px; transition: 0.4s; }
+        button:hover { background: var(--gold-hover); transform: translateY(-2px); }
+
+        .dev-footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #222; font-size: 11px; color: #555; }
+        .dev-link { color: var(--gold); text-decoration: none; font-weight: bold; transition: 0.3s; }
+
+        /* Admin Panel Styles */
+        #adminOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; padding: 20px; overflow-y: auto; }
+        .admin-content { max-width: 1000px; margin: 40px auto; background: #111; padding: 25px; border-radius: 10px; border: 1px solid var(--gold); }
+        table { width: 100%; border-collapse: collapse; color: #fff; margin-top: 15px; font-size: 12px; }
+        th { background: var(--gold); color: #000; padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #222; }
+        .btn-delete { background: #e74c3c; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+
+        /* Social Media Panel */
+        .side-contact { position: fixed; top: 20px; left: 20px; background: var(--card); padding: 15px; border-radius: 10px; border-left: 4px solid var(--gold); box-shadow: 0 15px 35px rgba(0,0,0,0.6); z-index: 999; display: flex; flex-direction: column; gap: 12px; }
+        .side-contact-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-size: 13px; transition: 0.3s; font-weight: 500; }
+        .side-contact-item:hover { transform: scale(1.05); color: #fff; }
+        .fa-instagram { color: #E1306C; }
+        .fa-tiktok { color: #fff; }
+        .fa-whatsapp { color: #25D366; }
+        .side-label { color: var(--gold); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+
+        @media (max-width: 768px) {
+            .side-contact { position: relative; top: 0; left: 0; margin: 0 auto 20px; width: 90%; max-width: 420px; box-sizing: border-box; border-left: none; border-top: 4px solid var(--gold); }
+        }
     </style>
 </head>
 <body>
 
+<div id="loader-wrapper">
+    <div class="loader-logo">ERHAN CUT</div>
+    <div class="loader-bar">
+        <div class="loader-progress"></div>
+    </div>
+    <p style="color: #444; font-size: 10px; margin-top: 15px; letter-spacing: 2px;">LUXURY EXPERIENCE LOADING...</p>
+</div>
+
+<div class="side-contact">
+    <div class="side-label">İletişim & Sosyal</div>
+    <a href="https://instagram.com/erhancutt" target="_blank" class="side-contact-item"><i class="fab fa-instagram"></i><span>erhancutt</span></a>
+    <a href="https://tiktok.com/@erhancut" target="_blank" class="side-contact-item"><i class="fab fa-tiktok"></i><span>erhancut</span></a>
+    <a href="https://wa.me/905354848015" target="_blank" class="side-contact-item"><i class="fab fa-whatsapp"></i><span>0535 484 80 15</span></a>
+    <div style="border-top: 1px solid #333; padding-top: 8px; margin-top: 5px;">
+        <a href="https://instagram.com/om3rfyc" target="_blank" style="color: #666; text-decoration: none; font-size: 11px;">
+            <i class="fas fa-code" style="color:var(--gold)"></i> YAPIMCI: @om3rfyc
+        </a>
+    </div>
+</div>
+
 <div class="container">
-    <h1>ERHAN HAIRCUT</h1>
-    <p>VIP Randevu Paneli</p>
+    <h1>ERHAN CUT</h1>
+    <div class="subtitle">Luxury Barber Experience</div>
     
     <form id="appointmentForm">
-        <input type="text" id="custName" placeholder="Adınız Soyadınız" required>
-        <input type="tel" id="custPhone" placeholder="Telefon (05xx xxx xx xx)" required>
+        <label>ADINIZ VE SOYADINIZ</label>
+        <input type="text" id="custName" placeholder="Örn: Ahmet Yılmaz" required>
         
+        <label>TELEFON NUMARANIZ</label>
+        <input type="tel" id="custPhone" placeholder="05XX XXX XX XX" required>
+        
+        <label>İSTEDİĞİNİZ HİZMET</label>
         <select id="custService">
-            <option value="Saç Kesimi">Saç Kesimi</option>
-            <option value="Sakal Tıraşı">Sakal Tıraşı</option>
-            <option value="Saç & Sakal Kombin">Saç & Sakal Kombin</option>
-            <option value="Cilt Bakımı">Cilt Bakımı</option>
+            <option value="Saç Kesimi">Modern Saç Kesimi</option>
+            <option value="Sakal Tasarımı">Sakal Tasarımı & Bakımı</option>
+            <option value="Saç & Sakal">Saç + Sakal Kombin</option>
+            <option value="Cilt Bakımı">VIP Cilt Bakımı & Maske</option>
+            <option value="Damat Tıraşı">Damat Tıraşı Özel</option>
         </select>
         
+        <label>RANDEVU SAATİ</label>
         <select id="custTime" required>
             <option value="">Saat Seçiniz</option>
-            <option value="09:00">09:00</option>
-            <option value="10:00">10:00</option>
-            <option value="11:00">11:00</option>
-            <option value="13:00">13:00</option>
-            <option value="14:00">14:00</option>
-            <option value="15:00">15:00</option>
-            <option value="16:00">16:00</option>
-            <option value="17:00">17:00</option>
+            <option value="09:00">09:00</option><option value="10:00">10:00</option>
+            <option value="11:00">11:00</option><option value="12:00">12:00</option>
+            <option value="13:30">13:30</option><option value="14:30">14:30</option>
+            <option value="15:30">15:30</option><option value="16:30">16:30</option>
+            <option value="17:30">17:30</option><option value="18:30">18:30</option>
+            <option value="19:30">19:30</option><option value="20:30">20:30</option>
+            <option value="21:15">21:15</option><option value="22:00">22:00</option>
         </select>
+
+        <label>AD SOYAD (ONAY)</label>
+        <textarea id="custConfirmName" placeholder="Onay için adınızı soyadınızı tekrar giriniz" required></textarea>
+
+        <div class="warning-text">
+            <i class="fas fa-clock"></i> Lütfen randevunuzdan 10 dakika önce salonda olunuz.
+        </div>
         
-        <button type="submit" id="submitBtn">RANDEVU TALEBİ GÖNDER</button>
+        <button type="submit" id="submitBtn">RANDEVU TALEBİNİ GÖNDER</button>
     </form>
     
-    <div class="footer">DEVELOPED BY ÖMER FARUK YACAN</div>
+    <div class="dev-footer">
+        <div id="adminTrigger" style="cursor: pointer;">© 2026 ERHAN CUT | TÜM HAKLARI SAKLIDIR</div>
+        <a href="https://instagram.com/om3rfyc" target="_blank" class="dev-link">DESIGNED BY @OM3RFYC</a>
+    </div>
+</div>
+
+<div id="adminOverlay">
+    <div class="admin-content">
+        <div style="display:flex; justify-content: space-between; align-items: center;">
+            <h2 style="color:var(--gold); margin:0;">Yönetim Paneli</h2>
+            <button onclick="document.getElementById('adminOverlay').style.display='none'" style="padding: 5px 15px; cursor:pointer;">Kapat</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Müşteri</th>
+                    <th>Telefon</th>
+                    <th>Hizmet</th>
+                    <th>Saat</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody id="adminBody"></tbody>
+        </table>
+    </div>
 </div>
 
 <script type="module">
-    // Firebase Modülleri
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-    // Senin Firebase Ayarların
     const firebaseConfig = {
         apiKey: "AIzaSyB0YRC4KEmy9cZQ07DpDhIzYIXopgUrWtQ",
         authDomain: "erhanhaircut.firebaseapp.com",
@@ -79,55 +234,103 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    emailjs.init("4fwv8uFfH2Ffj80u-");
 
-    // Senin EmailJS Ayarların
-    const EMAILJS_PUBLIC_KEY = "4fwv8uFfH2Ffj80u-";
-    const EMAILJS_SERVICE_ID = "service_480t845";
-    const EMAILJS_TEMPLATE_ID = "template_kvu1ttr";
+    // Splash Screen Kapatma
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('loader-wrapper').classList.add('loader-hidden');
+        }, 2500);
+    });
 
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+    async function updateAvailableTimes() {
+        const timeSelect = document.getElementById('custTime');
+        const options = timeSelect.options;
+        try {
+            const snap = await getDocs(collection(db, "randevular"));
+            const bookedTimes = [];
+            snap.forEach(d => bookedTimes.push(d.data().time));
+            for (let i = 0; i < options.length; i++) {
+                const val = options[i].value;
+                if (bookedTimes.includes(val) && val !== "") {
+                    options[i].disabled = true; 
+                    options[i].innerText = val + " (DOLU)";
+                } else if (val !== "") {
+                    options[i].disabled = false;
+                    options[i].innerText = val;
+                }
+            }
+        } catch (err) { console.error(err); }
+    }
+    updateAvailableTimes();
 
-    const form = document.getElementById('appointmentForm');
-    const btn = document.getElementById('submitBtn');
-
-    form.addEventListener('submit', async (e) => {
+    document.getElementById('appointmentForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        btn.innerText = "GÖNDERİLİYOR...";
-        btn.disabled = true;
+        const btn = document.getElementById('submitBtn');
+        const selectedTime = document.getElementById('custTime').value;
 
-        const appointmentData = {
+        btn.disabled = true; btn.innerText = "GÖNDERİLİYOR...";
+        const customerData = {
             name: document.getElementById('custName').value,
             phone: document.getElementById('custPhone').value,
             service: document.getElementById('custService').value,
-            time: document.getElementById('custTime').value,
-            date: new Date().toLocaleDateString('tr-TR'),
+            time: selectedTime,
             createdAt: new Date()
         };
 
         try {
-            // 1. Firebase Firestore'a Kaydet
-            await addDoc(collection(db, "randevular"), appointmentData);
-
-            // 2. EmailJS ile Sana Bildirim Gönder
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                name: appointmentData.name,
-                phone: appointmentData.phone,
-                time: appointmentData.time,
-                service: appointmentData.service
+            await addDoc(collection(db, "randevular"), customerData);
+            await emailjs.send("service_480t845", "template_kvu1ttr", {
+                name: customerData.name,
+                phone: customerData.phone,
+                time: customerData.time,
+                service: customerData.service
             });
+            alert(`Randevunuz Onaylandı!`);
+            e.target.reset();
+            updateAvailableTimes();
+        } catch (err) { alert("Hata oluştu."); }
+        btn.disabled = false; btn.innerText = "RANDEVU TALEBİNİ GÖNDER";
+    });
 
-            alert("Harika! Randevu talebin başarıyla Erhan Bey'e iletildi.");
-            form.reset();
-
-        } catch (error) {
-            console.error("Hata:", error);
-            alert("Bir hata oluştu. Lütfen bağlantını kontrol et ve tekrar dene.");
-        } finally {
-            btn.innerText = "RANDEVU TALEBİ GÖNDER";
-            btn.disabled = false;
+    // Admin Panel Logic
+    let clicks = 0;
+    document.getElementById('adminTrigger').addEventListener('click', () => {
+        clicks++;
+        if(clicks === 3) {
+            if(prompt("Admin Şifresi:") === "erhan123") {
+                document.getElementById('adminOverlay').style.display = 'block';
+                fetchData();
+            }
+            clicks = 0;
         }
     });
+
+    async function fetchData() {
+        const tbody = document.getElementById('adminBody');
+        tbody.innerHTML = "Yükleniyor...";
+        const q = query(collection(db, "randevular"), orderBy("createdAt", "desc"));
+        const snap = await getDocs(q);
+        tbody.innerHTML = "";
+        snap.forEach(d => {
+            const r = d.data();
+            tbody.innerHTML += `<tr>
+                <td>${r.name}</td>
+                <td><a href="tel:${r.phone}" style="color:var(--gold)">${r.phone}</a></td>
+                <td>${r.service}</td>
+                <td>${r.time}</td>
+                <td><button class="btn-delete" onclick="window.del('${d.id}')">Sil</button></td>
+            </tr>`;
+        });
+    }
+
+    window.del = async (id) => {
+        if(confirm("Silinsin mi?")) {
+            await deleteDoc(doc(db, "randevular", id));
+            fetchData();
+            updateAvailableTimes();
+        }
+    };
 </script>
 
 </body>
