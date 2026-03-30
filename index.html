@@ -299,7 +299,9 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    emailjs.init("4fwv8uFfH2Ffj80u-");
+    
+    // YENİ PUBLIC KEY BURAYA EKLENDİ
+    emailjs.init("XH3To-2LGD4UxMgEB");
 
     window.addEventListener('load', () => {
         setTimeout(() => {
@@ -344,12 +346,15 @@
 
         try {
             await addDoc(collection(db, "randevular"), customerData);
-            await emailjs.send("service_480t845", "template_kvu1ttr", {
+            
+            // YENİ SERVICE ID VE TEMPLATE ID BURAYA EKLENDİ
+            await emailjs.send("service_z25v9yx", "template_ayy07yx", {
                 name: customerData.name,
                 phone: customerData.phone,
                 time: customerData.time,
                 service: customerData.service
             });
+            
             alert(`Sayın ${customerData.name}, randevunuz başarıyla alındı!`);
             e.target.reset();
             updateAvailableTimes();
